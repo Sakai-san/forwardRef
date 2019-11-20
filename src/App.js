@@ -67,11 +67,7 @@ class Home extends React.Component {
 }
 
 function App() {
-  return (
-    <div className="App">
-      <Home />
-    </div>
-  );
+  return <Home />;
 }
 
 export default App;
