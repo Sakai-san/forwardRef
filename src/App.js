@@ -66,8 +66,71 @@ class Home extends React.Component {
   }
 }
 
+const Group = ({ children }) => {
+  return <div style={{ width: "100%" }}>{children}</div>;
+};
+
+const Label = ({ children }) => {
+  return <label>{children}</label>;
+};
+
+const EnhancedGroup = React.forwardRef((props, ref) => (
+  <Group {...props} forwardedRef={ref} />
+));
+
+const EnhancedLabel = React.forwardRef((props, ref) => (
+  <Label {...props} forwardedRef={ref} />
+));
+
+class MyInput extends React.Component {
+  componentDidMount() {
+    ///   this.props.ref.current.style.cssText = "border: 1px solid red;";
+    console.log(this.props);
+  }
+
+  render() {
+    return this.props.type === "text" ? <input /> : <textarea />;
+  }
+}
+
+class Form extends React.Component {
+  componentDidMount() {
+    ///   this.props.ref.current.style.cssText = "border: 1px solid red;";
+    console.log(this.props);
+  }
+  render() {
+    return (
+      <div>
+        <EnhancedGroup>
+          <EnhancedLabel>
+            First name
+            <MyInput type="text" />
+          </EnhancedLabel>
+        </EnhancedGroup>
+        <EnhancedGroup>
+          <EnhancedLabel>
+            Last name
+            <MyInput type="text" />
+          </EnhancedLabel>
+        </EnhancedGroup>
+        <EnhancedGroup>
+          <EnhancedLabel>
+            Some words about yourself
+            <MyInput type="textarea" />
+          </EnhancedLabel>
+        </EnhancedGroup>
+      </div>
+    );
+  }
+}
+
+const EnhancedForm = React.forwardRef((props, ref) => (
+  <Form forwardedRef={ref} {...props} />
+));
+
 function App() {
-  return <Home />;
+  const parent = React.createRef();
+  return <EnhancedForm ref={parent} />;
 }
 
 export default App;
